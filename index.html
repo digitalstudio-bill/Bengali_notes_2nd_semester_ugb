@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UGB Suggestions - 2nd Semester</title>
+<link rel="icon" href="images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B2447;
+    --navy-light:#15406e;
+    --gold:#C9A227;
+    --gold-light:#e8c766;
+    --ivory:#FBF7EE;
+    --maroon:#7A1F2B;
+    --text-dark:#1A1A1A;
+    --shadow:0 10px 30px rgba(11,36,71,0.15);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Hind Siliguri', sans-serif;
+    background:var(--ivory);
+    color:var(--text-dark);
+    overflow-x:hidden;
+    min-height:100vh;
+  }
+  h1,h2,h3,.brand{font-family:'Baloo Da 2', sans-serif;}
+  .eng{font-family:'Poppins', sans-serif;}
+
+  /* Background texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(201,162,39,0.08), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(11,36,71,0.06), transparent 40%);
+    pointer-events:none; z-index:0;
+  }
+
+  .view{
+    display:none;
+    min-height:100vh;
+    flex-direction:column;
+    align-items:center;
+    padding:40px 20px 100px;
+    position:relative; z-index:1;
+    animation: fadeInUp 0.6s ease;
+  }
+  .view.active{display:flex;}
+
+  @keyframes fadeInUp{
+    from{opacity:0; transform:translateY(18px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ---------- LOGO SEAL ---------- */
+  .seal-wrap{
+    position:relative;
+    width:150px; height:150px;
+    margin-bottom:22px;
+  }
+  .seal-wrap img{
+    width:100%; height:100%; border-radius:50%;
+    box-shadow:0 0 0 6px var(--ivory), 0 0 0 8px var(--gold), var(--shadow);
+    animation: floaty 5s ease-in-out infinite;
+  }
+  @keyframes floaty{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
+  }
+
+  .top-logo{
+    display:flex; align-items:center; gap:10px;
+    position:fixed; top:14px; left:18px; z-index:50;
+    cursor:pointer;
+  }
+  .top-logo img{width:40px; height:40px; border-radius:50%; border:2px solid var(--gold);}
+  .top-logo span{font-family:'Baloo Da 2'; color:var(--navy); font-weight:700; font-size:15px;}
+
+  /* ---------- HOME ---------- */
+  #home{justify-content:center; text-align:center;}
+  .home-heading{
+    font-size:clamp(28px,6vw,46px);
+    color:var(--navy);
+    font-weight:800;
+    letter-spacing:0.5px;
+    margin-bottom:6px;
+  }
+  .home-heading .accent{color:var(--maroon);}
+  .presented{
+    font-family:'Poppins', sans-serif;
+    color:var(--gold);
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:26px;
+  }
+  .welcome-text{
+    max-width:560px;
+    font-size:17px;
+    line-height:1.9;
+    color:#33415a;
+    margin-bottom:34px;
+  }
+
+  .seal-btn{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--navy);
+    color:#fff;
+    border:2px dashed var(--gold);
+    padding:16px 38px;
+    border-radius:50px;
+    font-family:'Baloo Da 2';
+    font-size:18px; font-weight:600;
+    cursor:pointer;
+    box-shadow:var(--shadow);
+    transition:transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    text-decoration:none;
+  }
+  .seal-btn:hover{
+    transform:translateY(-4px) scale(1.03);
+    background:var(--navy-light);
+    box-shadow:0 16px 34px rgba(11,36,71,0.3);
+  }
+  .seal-btn:focus-visible{outline:3px solid var(--gold); outline-offset:3px;}
+
+  /* ---------- SUGGESTIONS HUB ---------- */
+  .hub-heading{color:var(--navy); font-size:clamp(24px,5vw,34px); margin-bottom:8px; text-align:center;}
+  .hub-sub{color:#6b7280; margin-bottom:38px; text-align:center; font-size:15px;}
+
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+    gap:26px;
+    width:100%; max-width:960px;
+  }
+  .card{
+    background:#fff;
+    border-radius:22px;
+    padding:34px 24px;
+    text-align:center;
+    border:2px dotted var(--gold);
+    box-shadow:var(--shadow);
+    cursor:pointer;
+    position:relative;
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+  }
+  .card:hover{transform:translateY(-8px); box-shadow:0 20px 40px rgba(11,36,71,0.22);}
+  .card-icon{
+    width:64px; height:64px; border-radius:50%;
+    background:linear-gradient(145deg, var(--navy), var(--navy-light));
+    display:flex; align-items:center; justify-content:center;
+    font-size:28px;
+  }
+  .card h3{color:var(--navy); font-size:20px;}
+  .card p.tag{
+    font-family:'Poppins'; font-size:11px; letter-spacing:1px;
+    color:#8a8a8a;
+  }
+  .free-badge{
+    position:absolute; top:-12px; right:-10px;
+    background:var(--maroon); color:#fff;
+    font-family:'Poppins'; font-weight:600; font-size:12px;
+    padding:6px 14px; border-radius:20px;
+    box-shadow:0 6px 14px rgba(122,31,43,0.35);
+    transform:rotate(8deg);
+  }
+
+  /* ---------- BACK BUTTON ---------- */
+  .back-btn{
+    align-self:flex-start;
+    margin-bottom:22px;
+    background:none; border:none;
+    color:var(--navy); font-family:'Poppins';
+    font-size:14px; font-weight:600;
+    cursor:pointer; display:flex; align-items:center; gap:6px;
+  }
+  .back-btn:hover{color:var(--maroon);}
+
+  /* ---------- GALLERY PAGES ---------- */
+  .page-heading{color:var(--navy); font-size:clamp(22px,5vw,30px); margin-bottom:6px; text-align:center;}
+  .page-sub{color:#6b7280; margin-bottom:30px; text-align:center; font-size:14px;}
+
+  .telegram-cta{
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    margin-bottom:36px;
+  }
+  .tg-btn{
+    display:flex; align-items:center; gap:10px;
+    background:linear-gradient(135deg,#2AABEE,#229ED9);
+    color:#fff; padding:14px 30px; border-radius:50px;
+    font-family:'Baloo Da 2'; font-weight:600; font-size:16px;
+    text-decoration:none; box-shadow:0 10px 24px rgba(34,158,217,0.35);
+    transition:transform 0.25s ease;
+  }
+  .tg-btn:hover{transform:translateY(-3px) scale(1.03);}
+  .tg-note{
+    font-size:13px; color:var(--maroon); font-weight:600;
+    text-align:center; max-width:340px;
+  }
+
+  .contact-row{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:16px;
+    margin-bottom:36px;
+  }
+  .btn-outline{
+    padding:13px 26px; border-radius:50px;
+    border:2px solid var(--navy); color:var(--navy);
+    font-family:'Baloo Da 2'; font-weight:600; font-size:15px;
+    background:#fff; cursor:pointer; text-decoration:none;
+    transition:all 0.25s ease;
+  }
+  .btn-outline:hover{background:var(--navy); color:#fff;}
+
+  .gallery{
+    display:flex; flex-direction:column; align-items:center; gap:20px;
+    width:100%; max-width:640px;
+  }
+  .gallery-img{
+    width:100%; border-radius:16px;
+    box-shadow:var(--shadow);
+    opacity:0; transform:translateY(24px);
+    transition:opacity 0.6s ease, transform 0.6s ease;
+    border:1px solid rgba(11,36,71,0.08);
+  }
+  .gallery-img.in-view{opacity:1; transform:translateY(0);}
+
+  .empty-note{
+    color:#9aa3b2; font-size:14px; text-align:center; margin-top:10px;
+    font-family:'Poppins';
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    position:relative; z-index:1;
+    text-align:center; padding:26px 16px;
+    color:#8a93a6; font-size:13px;
+    font-family:'Poppins';
+    border-top:1px dashed rgba(201,162,39,0.4);
+    width:100%;
+  }
+</style>
+</head>
+<body>
+
+<div class="top-logo" onclick="navigate('home')">
+  <img src="images/logo.png" alt="UGB Notes Seller Logo">
+  <span>UGB Notes Seller</span>
+</div>
+
+<!-- HOME -->
+<section id="home" class="view active">
+  <div class="seal-wrap"><img src="images/logo.png" alt="UGB Notes Seller Logo"></div>
+  <h1 class="home-heading">UGB <span class="accent">SUGGESTIONS</span></h1>
+  <h1 class="home-heading" style="font-size:clamp(20px,4vw,28px); margin-bottom:14px;">2nd Semester</h1>
+  <p class="presented eng">Presented by Digital Studio</p>
+  <p class="welcome-text">
+    তোমাদের পরীক্ষার প্রস্তুতিকে আরও সহজ, গোছানো আর নির্ভরযোগ্য করে তুলতে UGB Notes Seller নিয়ে এসেছে
+    ২য় সেমিস্টারের বাংলা সাজেশন — যত্ন সহকারে তৈরি, সহজ ভাষায় লেখা এবং পরীক্ষার খাতায় সরাসরি কাজে লাগার মতো।
+    নিচের অপশন থেকে তোমার প্রয়োজনীয় সাজেশনটি বেছে নাও।
+  </p>
+  <button class="seal-btn" onclick="navigate('suggestions')">📖 Go for Bengali Notes</button>
+</section>
+
+<!-- SUGGESTIONS HUB -->
+<section id="suggestions" class="view">
+  <button class="back-btn" onclick="navigate('home')">← হোমে ফিরে যাও</button>
+  <h2 class="hub-heading">সাজেশন বেছে নাও</h2>
+  <p class="hub-sub">যেটা প্রয়োজন সেটাতে ক্লিক করো</p>
+  <div class="cards">
+    <div class="card" onclick="navigate('question')">
+      <span class="free-badge eng">FREE</span>
+      <div class="card-icon">📝</div>
+      <h3>Question Suggestions</h3>
+      <p class="tag eng">FULL ACCESS · NO CHARGE</p>
+    </div>
+    <div class="card" onclick="navigate('two')">
+      <div class="card-icon">✍️</div>
+      <h3>2 Marks Suggestions</h3>
+      <p class="tag eng">PREVIEW AVAILABLE</p>
+    </div>
+    <div class="card" onclick="navigate('ten')">
+      <div class="card-icon">📚</div>
+      <h3>10 Marks Suggestions</h3>
+      <p class="tag eng">PREVIEW AVAILABLE</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUESTION SUGGESTIONS (FREE, FULL) -->
+<section id="question" class="view">
+  <button class="back-btn" onclick="navigate('suggestions')">← ফিরে যাও</button>
+  <h2 class="page-heading">Question Suggestions</h2>
+  <p class="page-sub eng">Free · Full Suggestion</p>
+  <div class="gallery" id="question-gallery"></div>
+  <p class="empty-note" id="question-empty" style="display:none;">শীঘ্রই ছবি যুক্ত হবে।</p>
+</section>
+
+<!-- 2 MARKS -->
+<section id="two" class="view">
+  <button class="back-btn" onclick="navigate('suggestions')">← ফিরে যাও</button>
+  <h2 class="page-heading">2 Marks Suggestions</h2>
+  <p class="page-sub eng">Preview + Subscribe for Full Notes</p>
+
+  <div class="contact-row">
+    <a class="btn-outline" id="two-contact" href="#" target="_blank" rel="noopener">📩 Contact To Subscribe</a>
+  </div>
+
+  <div class="telegram-cta">
+    <a class="tg-btn" id="two-tg-top" href="#" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M9.036 15.803l-.396 5.57c.568 0 .814-.244 1.11-.537l2.663-2.545 5.522 4.03c1.012.564 1.73.267 1.99-.937L23.86 3.66c.36-1.428-.516-1.99-1.505-1.62L1.36 9.86c-1.4.54-1.383 1.31-.24 1.66l5.653 1.764L19.86 6.42c.6-.373 1.148-.166.698.207z"/></svg>
+      Telegram-এ Preview দেখো
+    </a>
+    <p class="tg-note">পুরো নোটস পেতে উপরের অপশনটিতে ক্লিক করো</p>
+  </div>
+
+  <div class="gallery" id="two-gallery"></div>
+  <p class="empty-note" id="two-empty" style="display:none;">শীঘ্রই প্রিভিউ যুক্ত হবে।</p>
+</section>
+
+<!-- 10 MARKS -->
+<section id="ten" class="view">
+  <button class="back-btn" onclick="navigate('suggestions')">← ফিরে যাও</button>
+  <h2 class="page-heading">10 Marks Suggestions</h2>
+  <p class="page-sub eng">Preview + Subscribe for Full Notes</p>
+
+  <div class="contact-row">
+    <a class="btn-outline" id="ten-contact" href="#" target="_blank" rel="noopener">📩 Contact To Subscribe</a>
+  </div>
+
+  <div class="telegram-cta">
+    <a class="tg-btn" id="ten-tg-top" href="#" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M9.036 15.803l-.396 5.57c.568 0 .814-.244 1.11-.537l2.663-2.545 5.522 4.03c1.012.564 1.73.267 1.99-.937L23.86 3.66c.36-1.428-.516-1.99-1.505-1.62L1.36 9.86c-1.4.54-1.383 1.31-.24 1.66l5.653 1.764L19.86 6.42c.6-.373 1.148-.166.698.207z"/></svg>
+      Telegram-এ Preview দেখো
+    </a>
+    <p class="tg-note">পুরো নোটস পেতে উপরের অপশনটিতে ক্লিক করো</p>
+  </div>
+
+  <div class="gallery" id="ten-gallery"></div>
+  <p class="empty-note" id="ten-empty" style="display:none;">শীঘ্রই প্রিভিউ যুক্ত হবে।</p>
+</section>
+
+<footer>
+  © <span id="year"></span> UGB Notes Seller — Digital Studio কর্তৃক পরিচালিত। সর্বসত্ব সংরক্ষিত।
+</footer>
+
+<script>
+/* ---------------- CONFIG (তুমি শুধু এখানে বদলাবে) ---------------- */
+const TELEGRAM_USERNAME = "ugbnotesseller";
+const MSG_TWO = "স্যার আমি আপনার বাংলা 2 মার্ক এর সাজেশনস নিতে চাই, নেওয়ার জন্য কি করতে হবে?";
+const MSG_TEN = "স্যার আমি আপনার বাংলা ১০ মার্ক এর সাজেশনস নিতে চাই, নেওয়ার জন্য কি করতে হবে?";
+
+// এখানে ছবির সংখ্যার সর্বোচ্চ সীমা বাড়িয়ে/কমিয়ে রাখা যায় — যেগুলো পাওয়া যাবে না সেগুলো নিজে থেকেই লুকিয়ে যাবে
+const MAX_QUESTION_IMAGES = 60;   // 1Q.png ... 60Q.png
+const MAX_TWO_IMAGES = 30;        // 1two.png ... 30two.png
+const MAX_TEN_IMAGES = 30;        // 1ten.png ... 30ten.png
+/* ------------------------------------------------------------------ */
+
+function telegramLink(message){
+  return `https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(message)}`;
+}
+
+document.getElementById('two-contact').href = telegramLink(MSG_TWO);
+document.getElementById('two-tg-top').href = telegramLink(MSG_TWO);
+document.getElementById('ten-contact').href = telegramLink(MSG_TEN);
+document.getElementById('ten-tg-top').href = telegramLink(MSG_TEN);
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ---------------- IMAGE GALLERY BUILDER ---------------- */
+function buildGallery(containerId, emptyId, prefix, ext, max, altLabel){
+  const container = document.getElementById(containerId);
+  let loadedCount = 0;
+  let checkedCount = 0;
+
+  for(let i=1; i<=max; i++){
+    const img = document.createElement('img');
+    img.className = 'gallery-img';
+    img.loading = 'lazy';
+    img.alt = `${altLabel} ${i}`;
+    img.src = `images/${i}${prefix}.${ext}`;
+
+    img.onload = function(){
+      loadedCount++;
+      checkedCount++;
+      observer.observe(img);
+    };
+    img.onerror = function(){
+      checkedCount++;
+      this.remove();
+      if(checkedCount === max && loadedCount === 0){
+        document.getElementById(emptyId).style.display = 'block';
+      }
+    };
+    container.appendChild(img);
+  }
+}
+
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('in-view');
+      observer.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.15});
+
+buildGallery('question-gallery', 'question-empty', 'Q', 'png', MAX_QUESTION_IMAGES, 'প্রশ্ন সাজেশন');
+buildGallery('two-gallery', 'two-empty', 'two', 'png', MAX_TWO_IMAGES, '২ মার্ক প্রিভিউ');
+buildGallery('ten-gallery', 'ten-empty', 'ten', 'png', MAX_TEN_IMAGES, '১০ মার্ক প্রিভিউ');
+
+/* ---------------- SIMPLE ROUTER ---------------- */
+function navigate(viewId){
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(viewId).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+  history.replaceState(null, '', '#' + viewId);
+}
+window.addEventListener('load', ()=>{
+  const hash = location.hash.replace('#','');
+  if(hash && document.getElementById(hash)) navigate(hash);
+});
+</script>
+
+</body>
+</html>
